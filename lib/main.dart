@@ -1,7 +1,11 @@
 import 'package:bytebank/screens/dashboard.dart';
 import 'package:flutter/material.dart';
+import 'package:bytebank/database/database.dart';
 
-void main() => runApp(BytebankApp());
+void main(){
+  runApp(BytebankApp());
+  findAll().then((contacts) => debugPrint(contacts.toString()));
+}
 
 class BytebankApp extends StatelessWidget {
   // This widget is the root of your application.
