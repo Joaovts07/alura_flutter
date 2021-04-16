@@ -26,11 +26,18 @@ class ContactsList extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.of(context).push(
+          Navigator.of(context)
+              .push(
             MaterialPageRoute(
               builder: (context) => ContactForm(),
             ),
-          ).then((newContact) => debugPrint(newContact.toString()));
+          )
+              .then((newContact) {
+            final String nome = newContact[1];
+            save(Contact(1, 'Fran', '1000'));
+            save(Contact(2, nome, '1000'));
+            debugPrint("contato:" + nome + "--" + newContact.toString());
+          });
         },
         child: Icon(
           Icons.add,
@@ -41,7 +48,6 @@ class ContactsList extends StatelessWidget {
 }
 
 class _ContactItem extends StatelessWidget {
-
   final Contact contact;
 
   _ContactItem(this.contact);
