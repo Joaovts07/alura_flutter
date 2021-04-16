@@ -1,10 +1,8 @@
 import 'package:bytebank/screens/dashboard.dart';
 import 'package:flutter/material.dart';
-import 'package:bytebank/database/database.dart';
 
-void main(){
+void main() {
   runApp(BytebankApp());
-  findAll().then((contacts) => debugPrint(contacts.toString()));
 }
 
 class BytebankApp extends StatelessWidget {
@@ -24,5 +22,3 @@ class BytebankApp extends StatelessWidget {
     );
   }
 }
-
-
