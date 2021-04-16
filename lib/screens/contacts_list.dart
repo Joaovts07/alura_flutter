@@ -3,7 +3,12 @@ import 'package:bytebank/models/contact.dart';
 import 'package:bytebank/screens/contact_form.dart';
 import 'package:flutter/material.dart';
 
-class ContactsList extends StatelessWidget {
+class ContactsList extends StatefulWidget {
+  @override
+  _ContactsListState createState() => _ContactsListState();
+}
+
+class _ContactsListState extends State<ContactsList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -13,8 +18,7 @@ class ContactsList extends StatelessWidget {
       body: FutureBuilder(
         future: findAll(),
         builder: (context, snapshot) {
-          switch(snapshot.connectionState){
-
+          switch (snapshot.connectionState) {
             case ConnectionState.none:
               break;
             case ConnectionState.waiting:
@@ -44,23 +48,17 @@ class ContactsList extends StatelessWidget {
               break;
           }
           return Text('Erro desconhecido');
-
         },
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.of(context)
               .push(
-            MaterialPageRoute(
-              builder: (context) => ContactForm(),
-            ),
-          )
-              .then((newContact) {
-            final String nome = newContact[1];
-            save(Contact(1, 'Fran', '1000'));
-            save(Contact(2, nome, '1000'));
-            debugPrint("contato:" + nome + "--" + newContact.toString());
-          });
+                MaterialPageRoute(
+                  builder: (context) => ContactForm(),
+                ),
+              )
+              .then((value) => setState(() {}));
         },
         child: Icon(
           Icons.add,
