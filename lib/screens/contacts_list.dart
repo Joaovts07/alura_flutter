@@ -50,7 +50,7 @@ class _ContactsListState extends State<ContactsList> {
                             MaterialPageRoute(
                               builder: (context) => ContactForm(contact),
                             ),
-                          );
+                          ).then((value) => setState(() {}));
                         },
                         child: _ContactItem(contact)),
                   );
