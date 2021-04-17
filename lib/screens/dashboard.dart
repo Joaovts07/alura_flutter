@@ -17,21 +17,25 @@ class Dashboard extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: Image.asset('images/bytebank_logo.png'),
           ),
-          Row(
-            children: [
-              _FeatureItem(
-                'Contacts',
-                Icons.contacts,
-              ),
-              _FeatureItem(
-                'Transfer',
-                Icons.monetization_on,
-              ),
-              _FeatureItem(
-                'Transaction Feed',
-                Icons.description,
-              ),
-            ],
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                _FeatureItem(
+                  'Contacts',
+                  Icons.contacts,
+                  onClick: () => _showContactList(context),
+                ),
+                _FeatureItem(
+                  'Transfer',
+                  Icons.monetization_on,
+                ),
+                _FeatureItem(
+                  'Transaction Feed',
+                  Icons.description,
+                ),
+              ],
+            ),
           ),
         ],
       ),
@@ -42,8 +46,9 @@ class Dashboard extends StatelessWidget {
 class _FeatureItem extends StatelessWidget {
   final String _name;
   final IconData _icon;
+  final Function onClick;
 
-  _FeatureItem(this._name, this._icon);
+  _FeatureItem(this._name, this._icon, {@required this.onClick});
 
   @override
   Widget build(BuildContext context) {
@@ -52,17 +57,11 @@ class _FeatureItem extends StatelessWidget {
       child: Material(
         color: Theme.of(context).primaryColor,
         child: InkWell(
-          onTap: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => ContactsList(),
-              ),
-            );
-          },
+            onTap: () => onClick(),
           child: Container(
             padding: EdgeInsets.all(8.0),
-            height: 95,
-            width: 111,
+            height: 100,
+            width: 115,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -86,4 +85,11 @@ class _FeatureItem extends StatelessWidget {
       ),
     );
   }
+}
+void _showContactList(BuildContext context){
+  Navigator.of(context).push(
+    MaterialPageRoute(
+      builder: (context) => ContactsList(),
+    ),
+  );
 }
