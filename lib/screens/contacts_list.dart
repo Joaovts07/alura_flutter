@@ -43,7 +43,17 @@ class _ContactsListState extends State<ContactsList> {
               return ListView.builder(
                 itemBuilder: (context, index) {
                   final Contact contact = contacts[index];
-                  return _ContactItem(contact);
+                  return Material(
+                    child: InkWell(
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => ContactForm(contact),
+                            ),
+                          );
+                        },
+                        child: _ContactItem(contact)),
+                  );
                 },
                 itemCount: contacts.length,
               );
@@ -57,7 +67,7 @@ class _ContactsListState extends State<ContactsList> {
           Navigator.of(context)
               .push(
                 MaterialPageRoute(
-                  builder: (context) => ContactForm(),
+                  builder: (context) => ContactForm(null),
                 ),
               )
               .then((value) => setState(() {}));
