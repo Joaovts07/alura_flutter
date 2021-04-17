@@ -14,19 +14,22 @@ class ContactForm extends StatefulWidget {
 
 class _ContactFormState extends State<ContactForm> {
   Contact contact;
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _accountNumberController =
-      TextEditingController();
-  final ContactDao _contactDAO = ContactDao();
+  TextEditingController _nameController;
+  TextEditingController _accountNumberController;
 
-  _ContactFormState(this.contact);
+  final ContactDao _contactDAO = ContactDao();
+  _ContactFormState(this.contact) {
+    _nameController   =
+        TextEditingController(text: contact.name);
+    _accountNumberController = TextEditingController(text: contact.accountNumber);
+  }
+
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
-        title: contact == null ?  Text('New contact') : Text('Edit contact'),
+        title: Text('New contact'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -46,7 +49,9 @@ class _ContactFormState extends State<ContactForm> {
               child: TextField(
                 controller: _accountNumberController,
                 decoration: InputDecoration(
-                  labelText: contact == null ? 'Account number': contact.accountNumber,
+                  labelText: contact == null
+                      ? 'Account number'
+                      : contact.accountNumber,
                 ),
                 style: TextStyle(
                   fontSize: 24.0,
@@ -59,15 +64,24 @@ class _ContactFormState extends State<ContactForm> {
               child: SizedBox(
                 width: double.maxFinite,
                 child: ElevatedButton(
-                  child: Text('Create'),
+                  child: contact == null ? Text('Create') : Text('Update'),
                   onPressed: () {
                     final String name = _nameController.text;
                     final String accountNumber =
                         _accountNumberController.text.toString();
-                    final Contact newContact = Contact(0, name, accountNumber);
-                    _contactDAO
-                        .save(newContact)
-                        .then((id) => Navigator.pop(context));
+                    if (contact == null) {
+                      final Contact newContact =
+                          Contact(0, name, accountNumber);
+                      _contactDAO
+                          .save(newContact)
+                          .then((id) => Navigator.pop(context));
+                    } else {
+                      final Contact newContact =
+                          Contact(contact.id, name, accountNumber);
+                      _contactDAO
+                          .update(newContact)
+                          .then((id) => Navigator.pop(context));
+                    }
                   },
                 ),
               ),
