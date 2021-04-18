@@ -10,7 +10,7 @@ Future<Database> getDatabase() async {
       db.execute('CREATE TABLE contacts('
           'id INTEGER PRIMARY KEY, '
           'name TEXT, '
-          'account_number INTEGER)');
+          'account_number TEXT)');
     },
     version: 1,
   );
