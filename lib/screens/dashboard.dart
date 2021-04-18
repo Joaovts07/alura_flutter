@@ -30,6 +30,7 @@ class Dashboard extends StatelessWidget {
                 _FeatureItem(
                   'Transfer',
                   Icons.monetization_on,
+                  onClick:() => null,
                 ),
                 _FeatureItem(
                   'Transaction Feed',
