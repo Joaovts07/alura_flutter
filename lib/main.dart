@@ -1,11 +1,11 @@
-import 'file:///C:/Users/joao/AndroidStudioProjects/flutter/bytebank/lib/https/webcliente.dart';
 import 'package:bytebank/screens/dashboard.dart';
 import 'package:flutter/material.dart';
 
+
+
 void main() {
   runApp(BytebankApp());
-  findAll();
-}
+  }
 
 class BytebankApp extends StatelessWidget {
   // This widget is the root of your application.

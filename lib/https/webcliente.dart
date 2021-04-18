@@ -5,6 +5,11 @@ import 'package:bytebank/models/transaction.dart';
 import 'package:http/http.dart';
 import 'package:http_interceptor/http_interceptor.dart';
 
+final Uri baseUri = Uri.http('192.168.0.234:8080', 'transactions');
+final Client client = HttpClientWithInterceptor.build(
+  interceptors: [LoggingInterceptor()],
+);
+
 class LoggingInterceptor implements InterceptorContract {
   @override
   Future<RequestData> interceptRequest({RequestData data}) async {
@@ -26,12 +31,8 @@ class LoggingInterceptor implements InterceptorContract {
 }
 
 Future<List<Transaction>> findAll() async {
-  final Client client = HttpClientWithInterceptor.build(
-    interceptors: [LoggingInterceptor()],
-  );
-  Uri uri = Uri.http('192.168.0.234:8080','transactions');
   final Response response =
-  await client.get(uri).timeout(Duration(seconds: 5));
+      await client.get(baseUri).timeout(Duration(seconds: 5));
   final List<dynamic> decodedJson = jsonDecode(response.body);
   final List<Transaction> transactions = [];
   for (Map<String, dynamic> transactionJson in decodedJson) {
@@ -42,10 +43,31 @@ Future<List<Transaction>> findAll() async {
       Contact(
         0,
         contactJson['name'],
-        '1000',
+        contactJson['accountName'],
       ),
     );
     transactions.add(transaction);
   }
   return transactions;
+}
+
+Future<Transaction> save(Transaction transaction) async {
+  final Map<String, dynamic> transactionMap = {
+    'value': transaction.value,
+    'contact': {
+      'name': transaction.contact.name,
+      'accountNumber': transaction.contact.accountNumber
+    }
+  };
+  final String transactionJson = jsonEncode(transactionMap);
+  final Response response = await client.post(baseUri,
+      headers: {'Content-type': 'application/json', 'password': '1000'},
+      body: transactionJson);
+
+  final Map<String, dynamic> returnJson = jsonDecode(response.body);
+  final Map<String, dynamic> contactJson = returnJson['contact'];
+  return Transaction(
+    returnJson['value'],
+    Contact(0, contactJson['name'], contactJson['accountNumber'].toString()),
+  );
 }

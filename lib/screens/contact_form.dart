@@ -9,7 +9,7 @@ class ContactForm extends StatefulWidget {
   ContactForm(this.contact);
 
   @override
-  _ContactFormState createState() => _ContactFormState(contact);
+  _ContactFormState createState() => _ContactFormState(contact: contact);
 }
 
 class _ContactFormState extends State<ContactForm> {
@@ -18,10 +18,14 @@ class _ContactFormState extends State<ContactForm> {
   TextEditingController _accountNumberController;
 
   final ContactDao _contactDAO = ContactDao();
-  _ContactFormState(this.contact) {
-    _nameController   =
-        TextEditingController(text: contact.name);
-    _accountNumberController = TextEditingController(text: contact.accountNumber);
+  _ContactFormState({this.contact}) {
+    if(contact != null){
+      _nameController   =
+          TextEditingController(text: contact.name);
+      _accountNumberController =
+          TextEditingController(text: contact.accountNumber);
+    }
+
   }
 
 
