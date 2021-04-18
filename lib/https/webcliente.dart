@@ -31,7 +31,7 @@ Future<List<Transaction>> findAll() async {
   );
   Uri uri = Uri.http('192.168.0.234:8080','transactions');
   final Response response =
-  await client.get(uri);
+  await client.get(uri).timeout(Duration(seconds: 5));
   final List<dynamic> decodedJson = jsonDecode(response.body);
   final List<Transaction> transactions = [];
   for (Map<String, dynamic> transactionJson in decodedJson) {
