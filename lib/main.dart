@@ -1,4 +1,4 @@
-import 'package:bytebank/models/webcliente.dart';
+import 'file:///C:/Users/joao/AndroidStudioProjects/flutter/bytebank/lib/https/webcliente.dart';
 import 'package:bytebank/screens/dashboard.dart';
 import 'package:flutter/material.dart';
 
