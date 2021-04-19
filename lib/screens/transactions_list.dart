@@ -1,7 +1,9 @@
 import 'package:bytebank/componentes/centered_message.dart';
 import 'package:bytebank/componentes/components.dart';
 import 'package:bytebank/https/webcliente.dart';
+import 'package:bytebank/models/contact.dart';
 import 'package:bytebank/models/transaction.dart';
+import 'package:bytebank/screens/transaction_form.dart';
 import 'package:flutter/material.dart';
 
 class TransactionsList extends StatelessWidget {
@@ -10,6 +12,21 @@ class TransactionsList extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Transactions'),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.of(context)
+              .push(
+                MaterialPageRoute(
+                  builder: (context) =>
+                      TransactionForm(Contact(0, 'joao de contatos', '1234')),
+                ),
+              )
+              .then((value) => () {});
+        },
+        child: Icon(
+          Icons.add,
+        ),
       ),
       body: FutureBuilder<List<Transaction>>(
         future: findAll(),
