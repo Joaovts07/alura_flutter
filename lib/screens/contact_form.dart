@@ -6,28 +6,25 @@ import 'package:flutter/material.dart';
 class ContactForm extends StatefulWidget {
   final Contact contact;
 
-  ContactForm(this.contact);
+  ContactForm({this.contact});
 
   @override
-  _ContactFormState createState() => _ContactFormState(contact: contact);
+  _ContactFormState createState() => _ContactFormState();
 }
 
 class _ContactFormState extends State<ContactForm> {
-  Contact contact;
   TextEditingController _nameController;
   TextEditingController _accountNumberController;
 
   final ContactDao _contactDAO = ContactDao();
-  _ContactFormState({this.contact}) {
-    if(contact != null){
-      _nameController   =
-          TextEditingController(text: contact.name);
+
+  _ContactFormState() {
+    if (widget.contact != null) {
+      _nameController = TextEditingController(text: widget.contact.name);
       _accountNumberController =
-          TextEditingController(text: contact.accountNumber);
+          TextEditingController(text: widget.contact.accountNumber);
     }
-
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +39,8 @@ class _ContactFormState extends State<ContactForm> {
             TextField(
               controller: _nameController,
               decoration: InputDecoration(
-                labelText: contact == null ? 'Full name' : contact.name,
+                labelText:
+                    widget.contact == null ? 'Full name' : widget.contact.name,
               ),
               style: TextStyle(
                 fontSize: 24.0,
@@ -53,9 +51,7 @@ class _ContactFormState extends State<ContactForm> {
               child: TextField(
                 controller: _accountNumberController,
                 decoration: InputDecoration(
-                  labelText: contact == null
-                      ? 'Account number'
-                      : contact.accountNumber,
+                  labelText: 'Account number',
                 ),
                 style: TextStyle(
                   fontSize: 24.0,
@@ -68,12 +64,12 @@ class _ContactFormState extends State<ContactForm> {
               child: SizedBox(
                 width: double.maxFinite,
                 child: ElevatedButton(
-                  child: contact == null ? Text('Create') : Text('Update'),
+                  child: widget.contact == null ? Text('Create') : Text('Update'),
                   onPressed: () {
                     final String name = _nameController.text;
                     final String accountNumber =
                         _accountNumberController.text.toString();
-                    if (contact == null) {
+                    if (widget.contact == null) {
                       final Contact newContact =
                           Contact(0, name, accountNumber);
                       _contactDAO
@@ -81,7 +77,7 @@ class _ContactFormState extends State<ContactForm> {
                           .then((id) => Navigator.pop(context));
                     } else {
                       final Contact newContact =
-                          Contact(contact.id, name, accountNumber);
+                          Contact(widget.contact.id, name, accountNumber);
                       _contactDAO
                           .update(newContact)
                           .then((id) => Navigator.pop(context));
