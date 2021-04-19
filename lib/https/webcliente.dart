@@ -51,7 +51,7 @@ Future<List<Transaction>> findAll() async {
   return transactions;
 }
 
-Future<Transaction> save(Transaction transaction) async {
+Future<Transaction> saveTransaction(Transaction transaction) async {
   final Map<String, dynamic> transactionMap = {
     'value': transaction.value,
     'contact': {
