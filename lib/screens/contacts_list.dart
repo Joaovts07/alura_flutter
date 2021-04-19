@@ -28,24 +28,22 @@ class _ContactsListState extends State<ContactsList> {
               return ProgressBar();
               break;
             case ConnectionState.active:
-              // TODO: Handle this case.
+            // TODO: Handle this case.
               break;
             case ConnectionState.done:
               final List<Contact> contacts = snapshot.data;
               return ListView.builder(
                 itemBuilder: (context, index) {
                   final Contact contact = contacts[index];
-                  return Material(
-                    child: InkWell(
-                        onTap: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => ContactForm(contact),
-                            ),
-                          ).then((value) => setState(() {}));
-                        },
-                        child: _ContactItem(contact)),
-                  );
+                  return _ContactItem(contact, onClick: () {
+                    Navigator.of(context)
+                        .push(
+                      MaterialPageRoute(
+                        builder: (context) => ContactForm(contact),
+                      ),
+                    )
+                        .then((value) => setState(() {}));
+                  },);
                 },
                 itemCount: contacts.length,
               );
@@ -58,10 +56,10 @@ class _ContactsListState extends State<ContactsList> {
         onPressed: () {
           Navigator.of(context)
               .push(
-                MaterialPageRoute(
-                  builder: (context) => ContactForm(null),
-                ),
-              )
+            MaterialPageRoute(
+              builder: (context) => ContactForm(null),
+            ),
+          )
               .then((value) => setState(() {}));
         },
         child: Icon(
@@ -74,13 +72,15 @@ class _ContactsListState extends State<ContactsList> {
 
 class _ContactItem extends StatelessWidget {
   final Contact contact;
+  final Function onClick;
 
-  _ContactItem(this.contact);
+  _ContactItem(this.contact, {this.onClick});
 
   @override
   Widget build(BuildContext context) {
     return Card(
       child: ListTile(
+        onTap: () => onClick(),
         title: Text(
           contact.name,
           style: TextStyle(
