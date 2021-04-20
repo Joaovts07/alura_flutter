@@ -42,7 +42,7 @@ class _ContactFormState extends State<ContactForm> {
             TextField(
               controller: _nameController,
               decoration: InputDecoration(
-                labelText: contact == null ? 'Full name' : contact.name,
+                labelText:  'Full name',
               ),
               style: TextStyle(
                 fontSize: 24.0,
@@ -53,9 +53,7 @@ class _ContactFormState extends State<ContactForm> {
               child: TextField(
                 controller: _accountNumberController,
                 decoration: InputDecoration(
-                  labelText: contact == null
-                      ? 'Account number'
-                      : contact.accountNumber,
+                  labelText: 'Account number',
                 ),
                 style: TextStyle(
                   fontSize: 24.0,
