@@ -6,10 +6,10 @@ import 'package:flutter/material.dart';
 class ContactForm extends StatefulWidget {
   final Contact contact;
 
-  ContactForm(this.contact);
+  ContactForm({this.contact});
 
   @override
-  _ContactFormState createState() => _ContactFormState(contact: contact);
+  _ContactFormState createState() => _ContactFormState(contact);
 }
 
 class _ContactFormState extends State<ContactForm> {
@@ -18,7 +18,7 @@ class _ContactFormState extends State<ContactForm> {
   TextEditingController _accountNumberController;
 
   final ContactDao _contactDAO = ContactDao();
-  _ContactFormState({this.contact}) {
+  _ContactFormState(this.contact) {
     if(contact != null){
       _nameController   =
           TextEditingController(text: contact.name);
