@@ -24,6 +24,11 @@ class _ContactFormState extends State<ContactForm> {
           TextEditingController(text: contact.name);
       _accountNumberController =
           TextEditingController(text: contact.accountNumber);
+    }else{
+      _nameController   =
+          TextEditingController();
+      _accountNumberController =
+          TextEditingController();
     }
 
   }
