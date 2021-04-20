@@ -39,7 +39,7 @@ class _ContactsListState extends State<ContactsList> {
                     Navigator.of(context)
                         .push(
                       MaterialPageRoute(
-                        builder: (context) => ContactForm(contact: contact),
+                        builder: (context) => ContactForm(contact),
                       ),
                     )
                         .then((value) => setState(() {}));
@@ -57,7 +57,7 @@ class _ContactsListState extends State<ContactsList> {
           Navigator.of(context)
               .push(
             MaterialPageRoute(
-              builder: (context) => ContactForm(),
+              builder: (context) => ContactForm(null),
             ),
           )
               .then((value) => setState(() {}));
