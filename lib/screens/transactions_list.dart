@@ -71,7 +71,9 @@ class TransactionsList extends StatelessWidget {
                   );
                 }
               }
+              debugPrint(snapshot.data.toString());
               return CenteredMessage(
+
                 'No transactions found',
                 icon: Icons.warning,
               );
