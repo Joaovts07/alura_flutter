@@ -6,7 +6,12 @@ import 'package:bytebank/models/transaction.dart';
 import 'package:bytebank/screens/transaction_form.dart';
 import 'package:flutter/material.dart';
 
-class TransactionsList extends StatelessWidget {
+class TransactionsList extends StatefulWidget {
+  @override
+  _TransactionsListState createState() => _TransactionsListState();
+}
+
+class _TransactionsListState extends State<TransactionsList> {
   final TransactionWebClient _webClient = TransactionWebClient();
 
   @override
@@ -24,7 +29,7 @@ class TransactionsList extends StatelessWidget {
                       TransactionForm(Contact(0, 'joao de contatos', '1234')),
                 ),
               )
-              .then((value) => () {});
+              .then((value) => setState(() {}));
         },
         child: Icon(
           Icons.add,
