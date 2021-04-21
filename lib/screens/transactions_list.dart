@@ -52,14 +52,16 @@ class TransactionsList extends StatelessWidget {
                         child: ListTile(
                           leading: Icon(Icons.monetization_on),
                           title: Text(
-                            transaction.value.toString(),
+                            transaction.contact.name.toString(),
                             style: TextStyle(
                               fontSize: 24.0,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                           subtitle: Text(
-                            transaction.contact.accountNumber.toString(),
+                            'conta:' +
+                                transaction.contact.accountNumber.toString() +
+                            '/ valor:' + transaction.value.toString(),
                             style: TextStyle(
                               fontSize: 16.0,
                             ),
