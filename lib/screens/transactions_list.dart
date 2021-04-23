@@ -55,6 +55,7 @@ class _TransactionsListState extends State<TransactionsList> {
                       final Transaction transaction = transactions[index];
                       return _BuildCard(
                         context,
+                        transaction,
                         onClick: () {
                           Navigator.of(context)
                               .push(
@@ -91,9 +92,10 @@ class _TransactionsListState extends State<TransactionsList> {
 
 class _BuildCard extends StatefulWidget {
   final BuildContext context;
+  final Transaction transaction;
   final Function onClick;
 
-  _BuildCard(this.context, {@required this.onClick});
+  _BuildCard(this.context, this.transaction, {@required this.onClick});
 
   @override
   _BuildCardState createState() => _BuildCardState();
