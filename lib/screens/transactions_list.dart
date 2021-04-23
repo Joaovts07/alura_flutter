@@ -55,6 +55,17 @@ class _TransactionsListState extends State<TransactionsList> {
                       final Transaction transaction = transactions[index];
                       return Card(
                         child: ListTile(
+                          onTap: () {
+                            Navigator.of(context)
+                                .push(
+                                  MaterialPageRoute(
+                                    builder: (context) => TransactionForm(
+                                        Contact(0, transaction.contact.name,
+                                            transaction.contact.accountNumber)),
+                                  ),
+                                )
+                                .then((value) => setState(() {}));
+                          },
                           leading: Icon(Icons.monetization_on),
                           title: Text(
                             transaction.contact.name.toString(),
@@ -66,7 +77,8 @@ class _TransactionsListState extends State<TransactionsList> {
                           subtitle: Text(
                             'conta:' +
                                 transaction.contact.accountNumber.toString() +
-                            '/ valor:' + transaction.value.toString(),
+                                '/ valor:' +
+                                transaction.value.toString(),
                             style: TextStyle(
                               fontSize: 16.0,
                             ),
@@ -80,7 +92,6 @@ class _TransactionsListState extends State<TransactionsList> {
               }
               debugPrint(snapshot.data.toString());
               return CenteredMessage(
-
                 'No transactions found',
                 icon: Icons.warning,
               );
