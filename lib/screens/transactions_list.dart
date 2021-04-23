@@ -24,11 +24,11 @@ class _TransactionsListState extends State<TransactionsList> {
         onPressed: () {
           Navigator.of(context)
               .push(
-                MaterialPageRoute(
-                  builder: (context) =>
-                      TransactionForm(Contact(0, 'joao de contatos', '1234')),
-                ),
-              )
+            MaterialPageRoute(
+              builder: (context) =>
+                  TransactionForm(Contact(0, 'joao de contatos', '1234')),
+            ),
+          )
               .then((value) => setState(() {}));
         },
         child: Icon(
@@ -53,38 +53,7 @@ class _TransactionsListState extends State<TransactionsList> {
                   return ListView.builder(
                     itemBuilder: (context, index) {
                       final Transaction transaction = transactions[index];
-                      return Card(
-                        child: ListTile(
-                          onTap: () {
-                            Navigator.of(context)
-                                .push(
-                                  MaterialPageRoute(
-                                    builder: (context) => TransactionForm(
-                                        Contact(0, transaction.contact.name,
-                                            transaction.contact.accountNumber)),
-                                  ),
-                                )
-                                .then((value) => setState(() {}));
-                          },
-                          leading: Icon(Icons.monetization_on),
-                          title: Text(
-                            transaction.contact.name.toString(),
-                            style: TextStyle(
-                              fontSize: 24.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          subtitle: Text(
-                            'conta:' +
-                                transaction.contact.accountNumber.toString() +
-                                '/ valor:' +
-                                transaction.value.toString(),
-                            style: TextStyle(
-                              fontSize: 16.0,
-                            ),
-                          ),
-                        ),
-                      );
+                      return _BuildCard(context, transaction);
                     },
                     itemCount: transactions.length,
                   );
@@ -104,3 +73,53 @@ class _TransactionsListState extends State<TransactionsList> {
     );
   }
 }
+
+class _BuildCard extends StatefulWidget {
+  final BuildContext context;
+  final Transaction transaction;
+
+  _BuildCard(this.context, this.transaction);
+
+  @override
+  _BuildCardState createState() => _BuildCardState();
+}
+
+class _BuildCardState extends State<_BuildCard> {
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: ListTile(
+        onTap: () {
+          Navigator.of(context)
+              .push(
+            MaterialPageRoute(
+              builder: (context) => TransactionForm(Contact(
+                  0,
+                  widget.transaction.contact.name,
+                  widget.transaction.contact.accountNumber)),
+            ),
+          )
+              .then((value) => setState(() {}));
+        },
+        leading: Icon(Icons.monetization_on),
+        title: Text(
+          widget.transaction.contact.name.toString(),
+          style: TextStyle(
+            fontSize: 24.0,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        subtitle: Text(
+          'conta:' +
+              widget.transaction.contact.accountNumber.toString() +
+              '/ valor:' +
+              widget.transaction.value.toString(),
+          style: TextStyle(
+            fontSize: 16.0,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
