@@ -24,11 +24,11 @@ class _TransactionsListState extends State<TransactionsList> {
         onPressed: () {
           Navigator.of(context)
               .push(
-            MaterialPageRoute(
-              builder: (context) =>
-                  TransactionForm(Contact(0, 'joao de contatos', '1234')),
-            ),
-          )
+                MaterialPageRoute(
+                  builder: (context) =>
+                      TransactionForm(Contact(0, 'joao de contatos', '1234')),
+                ),
+              )
               .then((value) => setState(() {}));
         },
         child: Icon(
@@ -53,7 +53,22 @@ class _TransactionsListState extends State<TransactionsList> {
                   return ListView.builder(
                     itemBuilder: (context, index) {
                       final Transaction transaction = transactions[index];
-                      return _BuildCard(context, transaction);
+                      return _BuildCard(
+                        context,
+                        onClick: () {
+                          Navigator.of(context)
+                              .push(
+                                MaterialPageRoute(
+                                  builder: (context) => TransactionForm(Contact(
+                                    0,
+                                    transaction.contact.name,
+                                    transaction.contact.accountNumber,
+                                  )),
+                                ),
+                              )
+                              .then((value) => setState(() {}));
+                        },
+                      );
                     },
                     itemCount: transactions.length,
                   );
@@ -76,9 +91,9 @@ class _TransactionsListState extends State<TransactionsList> {
 
 class _BuildCard extends StatefulWidget {
   final BuildContext context;
-  final Transaction transaction;
+  final Function onClick;
 
-  _BuildCard(this.context, this.transaction);
+  _BuildCard(this.context, {@required this.onClick});
 
   @override
   _BuildCardState createState() => _BuildCardState();
@@ -89,18 +104,7 @@ class _BuildCardState extends State<_BuildCard> {
   Widget build(BuildContext context) {
     return Card(
       child: ListTile(
-        onTap: () {
-          Navigator.of(context)
-              .push(
-            MaterialPageRoute(
-              builder: (context) => TransactionForm(Contact(
-                  0,
-                  widget.transaction.contact.name,
-                  widget.transaction.contact.accountNumber)),
-            ),
-          )
-              .then((value) => setState(() {}));
-        },
+        onTap: () => widget.onClick(),
         leading: Icon(Icons.monetization_on),
         title: Text(
           widget.transaction.contact.name.toString(),
@@ -122,4 +126,3 @@ class _BuildCardState extends State<_BuildCard> {
     );
   }
 }
-
