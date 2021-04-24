@@ -62,9 +62,9 @@ class _TransactionFormState extends State<TransactionForm> {
                     child: Text('Transfer'),
                     onPressed: () {
                       final double value =
-                          double.tryParse(_valueController.text);
+                      double.tryParse(_valueController.text);
                       final transactionCreated =
-                          Transaction(value, widget.contact);
+                      Transaction(value, widget.contact);
                       showDialog(
                           context: context,
                           builder: (contextDialog) {
@@ -85,17 +85,17 @@ class _TransactionFormState extends State<TransactionForm> {
     );
   }
 
-  void _save(
-    Transaction transactionCreated,
-    String password,
-    BuildContext context,
-  ) async {
+  void _save(Transaction transactionCreated,
+      String password,
+      BuildContext context,) async {
     _webClient
         .saveTransaction(transactionCreated, password)
         .then((transaction) {
       if (transaction != null) {
         Navigator.pop(context);
       }
+    }).catchError((error) {
+      print(error);
     });
   }
 }
