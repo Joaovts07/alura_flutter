@@ -102,8 +102,10 @@ class _TransactionFormState extends State<TransactionForm> {
             return FailureDialog(error.message);
           });
     }, test: (error) => error is HttpException).catchError((error){
+      _showFailureMessage(context,messageError: 'Timeout error');
+    },test: (error) => error is TimeoutException).catchError((error){
       _showFailureMessage(context);
-    },test: (error) => error is TimeoutException);
+    });
     if (transaction != null) {
       await showDialog(
           context: context,
@@ -114,11 +116,11 @@ class _TransactionFormState extends State<TransactionForm> {
     }
   }
 
-  Future _showFailureMessage(BuildContext context) {
+  Future _showFailureMessage(BuildContext context,{String messageError = 'Unknow Error'}) {
     return showDialog(
         context: context,
         builder: (contextDialog) {
-          return FailureDialog('timeout transaction');
+          return FailureDialog(messageError);
         });
   }
 }
