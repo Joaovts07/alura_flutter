@@ -15,9 +15,17 @@ class Dashboard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Image.asset('images/bytebank_logo.png'),
+            padding: const EdgeInsets.only(bottom: 8.0),
+            child: Container(
+              color: Colors.blue,
+              height: 300,
+              width: 400,
+              child: Image.asset('images/bytebank_logo.png',
+                fit: BoxFit.fill,
+              ),
+            ),
           ),
+          SaldoCard(35.0),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(
@@ -45,6 +53,31 @@ class Dashboard extends StatelessWidget {
     );
   }
 }
+
+
+class SaldoCard extends StatelessWidget{
+  final double saldo;
+
+  const SaldoCard( this.saldo) ;
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Padding(
+        padding: EdgeInsets.all(20.0),
+        child: Text(
+          saldo.toString(),
+          textAlign: TextAlign.center,
+          style: TextStyle(
+              fontSize: 40,
+              fontWeight: FontWeight.bold
+          ),
+        ),
+      ),
+    );
+  }
+
+}
+
 
 class _FeatureItem extends StatelessWidget {
   final String _name;
