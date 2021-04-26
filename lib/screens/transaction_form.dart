@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:bytebank/componentes/components.dart';
 import 'package:bytebank/componentes/response_dialog.dart';
 import 'package:bytebank/componentes/transaction_auth_dialog.dart';
 import 'package:bytebank/https/webclients/transaction_webclient.dart';
@@ -21,8 +22,7 @@ class _TransactionFormState extends State<TransactionForm> {
   final TextEditingController _valueController = TextEditingController();
   final TransactionWebClient _webClient = TransactionWebClient();
   final String _transactionID = Uuid().v4();
-
-
+  bool _sending = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,6 +35,10 @@ class _TransactionFormState extends State<TransactionForm> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
+              Visibility(
+                child: ProgressBar(message: 'Seding...'),
+                visible: _sending,
+              ),
               Text(
                 widget.contact.name,
                 style: TextStyle(
@@ -70,12 +74,15 @@ class _TransactionFormState extends State<TransactionForm> {
                       final double value =
                           double.tryParse(_valueController.text);
                       final transactionCreated =
-                          Transaction(_transactionID,value, widget.contact);
+                          Transaction(_transactionID, value, widget.contact);
                       showDialog(
                           context: context,
                           builder: (contextDialog) {
                             return TransactionAuthDialog(
                               onConfirm: (String password) {
+                                setState(() {
+                                  _sending = true;
+                                });
                                 _save(transactionCreated, password, context);
                               },
                             );
@@ -104,10 +111,14 @@ class _TransactionFormState extends State<TransactionForm> {
           builder: (contextDialog) {
             return FailureDialog(error.message);
           });
-    }, test: (error) => error is HttpException).catchError((error){
-      _showFailureMessage(context,messageError: 'Timeout error');
-    },test: (error) => error is TimeoutException).catchError((error){
+    }, test: (error) => error is HttpException).catchError((error) {
+      _showFailureMessage(context, messageError: 'Timeout error');
+    }, test: (error) => error is TimeoutException).catchError((error) {
       _showFailureMessage(context);
+    }).whenComplete(() {
+      setState(() {
+        _sending = false;
+      });
     });
     if (transaction != null) {
       await showDialog(
@@ -119,7 +130,8 @@ class _TransactionFormState extends State<TransactionForm> {
     }
   }
 
-  Future _showFailureMessage(BuildContext context,{String messageError = 'Unknow Error'}) {
+  Future _showFailureMessage(BuildContext context,
+      {String messageError = 'Unknow Error'}) {
     return showDialog(
         context: context,
         builder: (contextDialog) {
