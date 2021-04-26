@@ -1,10 +1,9 @@
-import 'package:bytebank/models/saldo.dart';
 import 'package:bytebank/screens/transactions_list.dart';
 import 'package:flutter/material.dart';
 
 import 'contacts_list.dart';
 import 'dashboard/feature_itens.dart';
-import 'dashboard/saldo.dart';
+import 'dashboard/saldo_card.dart';
 
 class Dashboard extends StatelessWidget {
   @override
@@ -29,7 +28,7 @@ class Dashboard extends StatelessWidget {
               ),
             ),
           ),
-          SaldoCard(Saldo(35.0)),
+          SaldoCard(),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(

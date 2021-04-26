@@ -1,8 +1,14 @@
 import 'package:bytebank/screens/dashboard.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'models/saldo.dart';
 
 void main() {
-  runApp(BytebankApp());
+  runApp(ChangeNotifierProvider(
+    create: (context) => Saldo(0),
+    child: BytebankApp(),
+  ));
 }
 
 class BytebankApp extends StatelessWidget {
