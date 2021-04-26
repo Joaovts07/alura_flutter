@@ -1,7 +1,10 @@
+import 'package:bytebank/models/saldo.dart';
 import 'package:bytebank/screens/transactions_list.dart';
 import 'package:flutter/material.dart';
 
 import 'contacts_list.dart';
+import 'dashboard/feature_itens.dart';
+import 'dashboard/saldo.dart';
 
 class Dashboard extends StatelessWidget {
   @override
@@ -20,27 +23,28 @@ class Dashboard extends StatelessWidget {
               color: Colors.blue,
               height: 300,
               width: 400,
-              child: Image.asset('images/bytebank_logo.png',
+              child: Image.asset(
+                'images/bytebank_logo.png',
                 fit: BoxFit.fill,
               ),
             ),
           ),
-          SaldoCard(35.0),
+          SaldoCard(Saldo(35.0)),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(
               children: [
-                _FeatureItem(
+                FeatureItem(
                   'Contacts',
                   Icons.contacts,
                   onClick: () => _showContactList(context),
                 ),
-                _FeatureItem(
+                FeatureItem(
                   'Transfer',
                   Icons.monetization_on,
-                  onClick:() => null,
+                  onClick: () => null,
                 ),
-                _FeatureItem(
+                FeatureItem(
                   'Transaction Feed',
                   Icons.description,
                   onClick: () => _showTransactionFeed(context),
@@ -49,75 +53,6 @@ class Dashboard extends StatelessWidget {
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-
-class SaldoCard extends StatelessWidget{
-  final double saldo;
-
-  const SaldoCard( this.saldo) ;
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      child: Padding(
-        padding: EdgeInsets.all(20.0),
-        child: Text(
-          saldo.toString(),
-          textAlign: TextAlign.center,
-          style: TextStyle(
-              fontSize: 40,
-              fontWeight: FontWeight.bold
-          ),
-        ),
-      ),
-    );
-  }
-
-}
-
-
-class _FeatureItem extends StatelessWidget {
-  final String _name;
-  final IconData _icon;
-  final Function onClick;
-
-  _FeatureItem(this._name, this._icon, {@required this.onClick});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Material(
-        color: Theme.of(context).primaryColor,
-        child: InkWell(
-          onTap: () => onClick(),
-          child: Container(
-            padding: EdgeInsets.all(8.0),
-            height: 100,
-            width: 115,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Icon(
-                  _icon,
-                  color: Colors.white,
-                  size: 24.0,
-                ),
-                Text(
-                  _name,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16.0,
-                  ),
-                )
-              ],
-            ),
-          ),
-        ),
       ),
     );
   }

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class ProgressBar extends StatelessWidget {
   final String message;
 
-  const ProgressBar({this.message});
+  const ProgressBar({this.message = 'Loading...'});
 
   @override
   Widget build(BuildContext context) {
