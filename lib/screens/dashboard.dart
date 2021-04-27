@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'contacts_list.dart';
 import 'dashboard/feature_itens.dart';
 import 'dashboard/saldo_card.dart';
+import 'formulario.dart';
 
 class Dashboard extends StatelessWidget {
   @override
@@ -39,9 +40,9 @@ class Dashboard extends StatelessWidget {
                   onClick: () => _showContactList(context),
                 ),
                 FeatureItem(
-                  'Transfer',
+                  'Deposit',
                   Icons.monetization_on,
-                  onClick: () => null,
+                  onClick: () => _showDepositForm(context),
                 ),
                 FeatureItem(
                   'Transaction Feed',
@@ -69,6 +70,15 @@ void _showTransactionFeed(BuildContext context) {
   Navigator.of(context).push(
     MaterialPageRoute(
       builder: (context) => TransactionsList(),
+    ),
+  );
+}
+
+
+void _showDepositForm(BuildContext context) {
+  Navigator.of(context).push(
+    MaterialPageRoute(
+      builder: (context) => DepositForm(),
     ),
   );
 }
