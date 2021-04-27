@@ -55,7 +55,6 @@ class DepositFormState extends State<DepositForm> {
   void _criaDeposit(BuildContext context) {
     final double value = double.tryParse(_controladorCampoValor.text);
     if (value != null) {
-      //final transferenciaCriada = Transferencia(valor, numeroConta);
       Provider.of<Saldo>(context,listen: false ).add(value);
       Navigator.pop(context);
     }
