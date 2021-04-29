@@ -3,6 +3,7 @@ import 'package:bytebank/database/DAO/contact_dao.dart';
 import 'package:bytebank/models/contact.dart';
 import 'package:bytebank/screens/contact_form.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 @immutable
 abstract class ContactsListState {
