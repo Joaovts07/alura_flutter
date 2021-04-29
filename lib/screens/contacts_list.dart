@@ -4,6 +4,41 @@ import 'package:bytebank/models/contact.dart';
 import 'package:bytebank/screens/contact_form.dart';
 import 'package:flutter/material.dart';
 
+@immutable
+abstract class ContactsListState {
+  const ContactsListState();
+}
+
+@immutable
+class LoadingContactsListState extends ContactsListState {
+  const LoadingContactsListState();
+}
+
+@immutable
+class InitContactsListState extends ContactsListState {
+  const InitContactsListState();
+}
+
+@immutable
+class LoadedContactsListState extends ContactsListState {
+  final List<Contact> _contacts;
+
+  const LoadedContactsListState(this._contacts);
+}
+
+@immutable
+class FatalErrorContactsListState extends ContactsListState {
+  const FatalErrorContactsListState();
+}
+class ContactsListCubit extends Cubit<ContactsListState> {
+  ContactsListCubit() : super(InitContactsListState());
+
+  void reload(ContactDao dao) async {
+    emit(LoadingContactsListState());
+    dao.findAll().then((contacts) => emit(LoadedContactsListState(contacts)));
+  }
+}
+
 class ContactsList extends StatefulWidget {
   @override
   _ContactsListState createState() => _ContactsListState();
