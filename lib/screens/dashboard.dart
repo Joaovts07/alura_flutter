@@ -1,6 +1,6 @@
+import 'package:bytebank/componentes/container.dart';
 import 'package:bytebank/screens/transactions_list.dart';
 import 'package:flutter/material.dart';
-
 import 'contacts_list.dart';
 import 'dashboard/feature_itens.dart';
 import 'dashboard/saldo_card.dart';
@@ -37,10 +37,10 @@ class Dashboard extends StatelessWidget {
                 FeatureItem(
                   'Contacts',
                   Icons.contacts,
-                  onClick: () => _showContactList(context),
+                  onClick: () => _showContactsList(context),
                 ),
                 FeatureItem(
-                  'Deposit',
+                  'Depposit',
                   Icons.monetization_on,
                   onClick: () => _showDepositForm(context),
                 ),
@@ -58,12 +58,8 @@ class Dashboard extends StatelessWidget {
   }
 }
 
-void _showContactList(BuildContext context) {
-  Navigator.of(context).push(
-    MaterialPageRoute(
-      builder: (context) => ContactsList(),
-    ),
-  );
+void _showContactsList(BuildContext blocContext) {
+  push(blocContext, ContactsListContainer());
 }
 
 void _showTransactionFeed(BuildContext context) {
