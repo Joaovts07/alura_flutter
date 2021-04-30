@@ -1,14 +1,28 @@
 import 'package:bytebank/componentes/container.dart';
+import 'package:bytebank/models/name.dart';
 import 'package:bytebank/screens/transactions_list.dart';
 import 'package:flutter/material.dart';
-import 'contacts_list.dart';
-import 'dashboard/feature_itens.dart';
-import 'dashboard/saldo_card.dart';
-import 'deposit_form.dart';
+import 'package:bytebank/componentes/localization.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../contacts_list.dart';
+import '../deposit_form.dart';
+import 'feature_itens.dart';
+import 'saldo_card.dart';
+
+class DashboardContainer extends BlocContainer {
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) => NameCubit("Joao"),
+      child: Dashboard(),
+    );
+  }
+}
 
 class Dashboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final i18n = DashboardViewI18N(context);
     return Scaffold(
       appBar: AppBar(
         title: Text('Dashboard'),
@@ -35,7 +49,7 @@ class Dashboard extends StatelessWidget {
             child: Row(
               children: [
                 FeatureItem(
-                  'Contacts',
+                  i18n.contacts,
                   Icons.contacts,
                   onClick: () => _showContactsList(context),
                 ),
@@ -58,6 +72,18 @@ class Dashboard extends StatelessWidget {
   }
 }
 
+class DashboardViewI18N extends ViewI18N {
+  DashboardViewI18N(BuildContext context) : super(context);
+
+  String get contacts => localize({"pt-br": "Contatos", "en": "Contacts"});
+
+  String get transaction_feed =>
+      localize({"pt-br": "Depositar", "en": "Depposit"});
+
+  String get change_name =>
+      localize({"pt-br": "Lista de Transações", "en": 'Transaction Feed'});
+}
+
 void _showContactsList(BuildContext blocContext) {
   push(blocContext, ContactsListContainer());
 }
@@ -69,7 +95,6 @@ void _showTransactionFeed(BuildContext context) {
     ),
   );
 }
-
 
 void _showDepositForm(BuildContext context) {
   Navigator.of(context).push(
