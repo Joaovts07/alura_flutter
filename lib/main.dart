@@ -1,8 +1,10 @@
-import 'package:bytebank/screens/dashboard.dart';
+import 'package:bytebank/screens/dashboard/dashboard.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
 import 'componentes/bytebank_theme.dart';
+import 'componentes/localization.dart';
 import 'models/saldo.dart';
 
 void main() {
@@ -16,13 +18,24 @@ void main() {
   ));
 }
 
+class LogObserver extends BlocObserver {
+  @override
+  void onChange(Cubit cubit, Change change) {
+    print("${cubit.runtimeType} > $change");
+    super.onChange(cubit, change);
+  }
+}
+
 class BytebankApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    Bloc.observer = LogObserver();
+
     return MaterialApp(
       theme: bytebankTheme,
-      home: Dashboard(),
+      home: LocalizationContainer(
+        child: DashboardContainer(),
+      ),
     );
   }
 }
