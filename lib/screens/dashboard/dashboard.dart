@@ -54,12 +54,12 @@ class Dashboard extends StatelessWidget {
                   onClick: () => _showContactsList(context),
                 ),
                 FeatureItem(
-                  'Depposit',
+                  i18n.deposit,
                   Icons.monetization_on,
                   onClick: () => _showDepositForm(context),
                 ),
                 FeatureItem(
-                  'Transaction Feed',
+                  i18n.transactionFeed,
                   Icons.description,
                   onClick: () => _showTransactionFeed(context),
                 ),
@@ -77,10 +77,10 @@ class DashboardViewI18N extends ViewI18N {
 
   String get contacts => localize({"pt-br": "Contatos", "en": "Contacts"});
 
-  String get transaction_feed =>
+  String get transactionFeed =>
       localize({"pt-br": "Depositar", "en": "Depposit"});
 
-  String get change_name =>
+  String get deposit =>
       localize({"pt-br": "Lista de Transações", "en": 'Transaction Feed'});
 }
 
