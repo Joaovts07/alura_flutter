@@ -13,7 +13,7 @@ void main(){
     await tester.pumpWidget(MaterialApp(home: Dashboard()));
     final iconTransferFeatureItem = find.widgetWithIcon(FeatureItem, Icons.monetization_on);
     expect(iconTransferFeatureItem, findsOneWidget);
-    final nameTransferFeatureItem = find.widgetWithText(FeatureItem, 'Transfer');
+    final nameTransferFeatureItem = find.widgetWithText(FeatureItem,'Deposit');
     expect(nameTransferFeatureItem, findsOneWidget);
   });
 }
