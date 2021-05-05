@@ -1,7 +1,8 @@
 import 'package:bytebank/screens/dashboard/dashboard.dart';
-import 'package:bytebank/screens/dashboard/feature_itens.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+
+import 'test_matchers.dart';
 
 void main() {
   testWidgets('Should display the main image when the Dashboard is opended',
@@ -26,11 +27,4 @@ void main() {
             featureItemMatcher(widget, 'Transaction Feed', Icons.description));
         expect(transactionFeedFeatureItem, findsOneWidget);
       });
-}
-
-bool featureItemMatcher(Widget widget, String name, IconData icon) {
-  if (widget is FeatureItem) {
-    return widget.name == name && widget.icon == icon;
-  }
-  return false;
 }
