@@ -30,6 +30,14 @@ void main() {
     await tester.pumpAndSettle();
     final contactForm = find.byType(ContactForm);
     expect(contactForm, findsOneWidget);
-  });
 
+    final nameTextField = find.byWidgetPredicate((widget) {
+      if (widget is TextField) {
+        return widget.decoration.labelText == 'Full name';
+      }
+      return false;
+    });
+    expect(nameTextField, findsOneWidget);
+    await tester.enterText(nameTextField, 'Joao');
+  });
 }
