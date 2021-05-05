@@ -24,7 +24,7 @@ void main() {
           (tester) async {
         await tester.pumpWidget(MaterialApp(home: Dashboard()));
         final transactionFeedFeatureItem = find.byWidgetPredicate((widget) =>
-            featureItemMatcher(widget, 'Transaction Feed', Icons.description));
+            featureItemMatcher(widget, 'Contacts', Icons.contacts));
         expect(transactionFeedFeatureItem, findsOneWidget);
       });
 }

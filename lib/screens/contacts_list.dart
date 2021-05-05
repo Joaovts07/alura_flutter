@@ -5,12 +5,17 @@ import 'package:bytebank/screens/contact_form.dart';
 import 'package:flutter/material.dart';
 
 class ContactsList extends StatefulWidget {
+  final ContactDao contactDao;
+
+  const ContactsList({this.contactDao});
   @override
-  _ContactsListState createState() => _ContactsListState();
+  _ContactsListState createState() => _ContactsListState(contactDao: contactDao);
 }
 
 class _ContactsListState extends State<ContactsList> {
-  final ContactDao _contactDAO = ContactDao();
+  final ContactDao contactDao;
+
+  _ContactsListState({@required this.contactDao});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +24,7 @@ class _ContactsListState extends State<ContactsList> {
         title: Text('Contacts'),
       ),
       body: FutureBuilder(
-        future: _contactDAO.findAll(),
+        future: contactDao.findAll(),
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.none:

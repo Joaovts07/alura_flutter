@@ -14,11 +14,10 @@ void main() {
     expect(dashboard, findsOneWidget);
 
     final transferFeatureItem = find.byWidgetPredicate((widget) =>
-        featureItemMatcher(widget, 'Transfer', Icons.monetization_on));
+        featureItemMatcher(widget, 'Contacts', Icons.contacts));
     expect(transferFeatureItem, findsOneWidget);
     await tester.tap(transferFeatureItem);
-    await tester.pump();
-    await tester.pump();
+    await tester.pumpAndSettle();
 
     final contactsList = find.byType(ContactsList);
     expect(contactsList, findsOneWidget);
@@ -26,13 +25,7 @@ void main() {
     final fabNewContact = find.widgetWithIcon(FloatingActionButton, Icons.add);
     expect(fabNewContact, findsOneWidget);
     await tester.tap(fabNewContact);
-    await tester.pump();
-    await tester.pump();
-    await tester.pump();
-    await tester.pump();
-    await tester.pump();
-    await tester.pump();
-
+    await tester.pumpAndSettle();
     final contactForm = find.byType(ContactForm);
     expect(contactForm, findsOneWidget);
   });

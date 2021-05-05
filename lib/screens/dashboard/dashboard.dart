@@ -1,4 +1,4 @@
-import 'package:bytebank/screens/dashboard/saldo_card.dart';
+import 'package:bytebank/database/DAO/contact_dao.dart';
 import 'package:bytebank/screens/transactions_list.dart';
 import 'package:flutter/material.dart';
 
@@ -7,6 +7,9 @@ import '../deposit_form.dart';
 import 'feature_itens.dart';
 
 class Dashboard extends StatelessWidget {
+  final ContactDao contactDao;
+
+  const Dashboard({@required this.contactDao}) ;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,7 +38,7 @@ class Dashboard extends StatelessWidget {
                           ),
                         ),
                       ),
-                      SaldoCard(),
+                      //SaldoCard(),
                       SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
                         child: Row(

@@ -5,34 +5,31 @@ import 'package:flutter/material.dart';
 
 class ContactForm extends StatefulWidget {
   final Contact contact;
+  final ContactDao contactDao;
 
-  ContactForm({this.contact});
+  ContactForm({this.contact, this.contactDao});
 
   @override
-  _ContactFormState createState() => _ContactFormState(contact);
+  _ContactFormState createState() =>
+      _ContactFormState(contact: contact, contactDAO: contactDao);
 }
 
 class _ContactFormState extends State<ContactForm> {
-  Contact contact;
+  final Contact contact;
+  final ContactDao contactDAO;
   TextEditingController _nameController;
   TextEditingController _accountNumberController;
 
-  final ContactDao _contactDAO = ContactDao();
-  _ContactFormState(this.contact) {
-    if(contact != null){
-      _nameController   =
-          TextEditingController(text: contact.name);
+  _ContactFormState({this.contact, this.contactDAO}) {
+    if (contact != null) {
+      _nameController = TextEditingController(text: contact.name);
       _accountNumberController =
           TextEditingController(text: contact.accountNumber);
-    }else{
-      _nameController   =
-          TextEditingController();
-      _accountNumberController =
-          TextEditingController();
+    } else {
+      _nameController = TextEditingController();
+      _accountNumberController = TextEditingController();
     }
-
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +44,7 @@ class _ContactFormState extends State<ContactForm> {
             TextField(
               controller: _nameController,
               decoration: InputDecoration(
-                labelText:  'Full name',
+                labelText: 'Full name',
               ),
               style: TextStyle(
                 fontSize: 24.0,
@@ -75,17 +72,17 @@ class _ContactFormState extends State<ContactForm> {
                   onPressed: () {
                     final String name = _nameController.text;
                     final String accountNumber =
-                    _accountNumberController.text.toString();
+                        _accountNumberController.text.toString();
                     if (contact == null) {
                       final Contact newContact =
-                      Contact(0, name, accountNumber);
-                      _contactDAO
+                          Contact(0, name, accountNumber);
+                      contactDAO
                           .save(newContact)
                           .then((id) => Navigator.pop(context));
                     } else {
                       final Contact newContact =
-                      Contact(contact.id, name, accountNumber);
-                      _contactDAO
+                          Contact(contact.id, name, accountNumber);
+                      contactDAO
                           .update(newContact)
                           .then((id) => Navigator.pop(context));
                     }

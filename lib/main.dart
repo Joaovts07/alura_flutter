@@ -1,3 +1,4 @@
+import 'package:bytebank/database/DAO/contact_dao.dart';
 import 'package:bytebank/screens/dashboard/dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -12,17 +13,20 @@ void main() {
         create: (context) => Saldo(0),
       )
     ],
-    child: BytebankApp(),
+    child: BytebankApp(contactDao: ContactDao(),),
   ));
 }
 
 class BytebankApp extends StatelessWidget {
   // This widget is the root of your application.
+  final ContactDao contactDao;
+
+  const BytebankApp({this.contactDao});
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: bytebankTheme,
-      home: Dashboard(),
+      home: Dashboard(contactDao: contactDao,),
     );
   }
 }
