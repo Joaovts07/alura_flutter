@@ -46,7 +46,7 @@ class Dashboard extends StatelessWidget {
                             FeatureItem(
                               'Contacts',
                               Icons.contacts,
-                              onClick: () => _showContactList(context),
+                              onClick: () => _showContactList(context,contactDao),
                             ),
                             FeatureItem(
                               'Deposit',
@@ -69,10 +69,10 @@ class Dashboard extends StatelessWidget {
   }
 }
 
-void _showContactList(BuildContext context) {
+void _showContactList(BuildContext context,ContactDao contactDao) {
   Navigator.of(context).push(
     MaterialPageRoute(
-      builder: (context) => ContactsList(),
+      builder: (context) => ContactsList(contactDao:contactDao,),
     ),
   );
 }

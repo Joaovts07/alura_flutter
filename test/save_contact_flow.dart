@@ -4,11 +4,13 @@ import 'package:bytebank/screens/contacts_list.dart';
 import 'package:bytebank/screens/dashboard/dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'mocks.dart';
 import 'test_matchers.dart';
 
 void main() {
   testWidgets('Should save a contact', (tester) async {
-    await tester.pumpWidget(BytebankApp());
+    final mockContactDao = MockContactDao();
+    await tester.pumpWidget(BytebankApp(contactDao: mockContactDao));
 
     final dashboard = find.byType(Dashboard);
     expect(dashboard, findsOneWidget);
