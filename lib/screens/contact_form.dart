@@ -76,9 +76,7 @@ class _ContactFormState extends State<ContactForm> {
                     if (contact == null) {
                       final Contact newContact =
                           Contact(0, name, accountNumber);
-                      contactDAO
-                          .save(newContact)
-                          .then((id) => Navigator.pop(context));
+                      _saveContact(newContact, context);
                     } else {
                       final Contact newContact =
                           Contact(contact.id, name, accountNumber);
@@ -94,5 +92,10 @@ class _ContactFormState extends State<ContactForm> {
         ),
       ),
     );
+  }
+
+  void _saveContact(Contact newContact, BuildContext context) async {
+    await contactDAO.save(newContact);
+    Navigator.pop(context);
   }
 }

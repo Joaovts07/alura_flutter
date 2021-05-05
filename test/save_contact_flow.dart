@@ -4,6 +4,7 @@ import 'package:bytebank/screens/contacts_list.dart';
 import 'package:bytebank/screens/dashboard/dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/mockito.dart';
 import 'mocks.dart';
 import 'test_matchers.dart';
 
@@ -15,8 +16,8 @@ void main() {
     final dashboard = find.byType(Dashboard);
     expect(dashboard, findsOneWidget);
 
-    final transferFeatureItem = find.byWidgetPredicate((widget) =>
-        featureItemMatcher(widget, 'Contacts', Icons.contacts));
+    final transferFeatureItem = find.byWidgetPredicate(
+        (widget) => featureItemMatcher(widget, 'Contacts', Icons.contacts));
     expect(transferFeatureItem, findsOneWidget);
     await tester.tap(transferFeatureItem);
     await tester.pumpAndSettle();
@@ -32,12 +33,32 @@ void main() {
     expect(contactForm, findsOneWidget);
 
     final nameTextField = find.byWidgetPredicate((widget) {
-      if (widget is TextField) {
-        return widget.decoration.labelText == 'Full name';
-      }
-      return false;
+      return _textFieldMatcher(widget, 'Full name');
     });
     expect(nameTextField, findsOneWidget);
     await tester.enterText(nameTextField, 'Joao');
+
+    final accountTextField = find.byWidgetPredicate((widget) {
+      return _textFieldMatcher(widget, 'Account number');
+    });
+    expect(accountTextField, findsOneWidget);
+    await tester.enterText(accountTextField, '1000');
+
+    final createButton = find.widgetWithText(ElevatedButton, 'Create');
+    expect(createButton, findsOneWidget);
+    await tester.tap(createButton);
+    await tester.pumpAndSettle();
+
+    final contactsListBack = find.byType(ContactsList);
+    expect(contactsListBack, findsOneWidget);
+
+    verify(mockContactDao.findAll());
   });
+}
+
+bool _textFieldMatcher(Widget widget, String labelText) {
+  if (widget is TextField) {
+    return widget.decoration.labelText == labelText;
+  }
+  return false;
 }
