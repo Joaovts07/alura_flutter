@@ -1,4 +1,5 @@
 import 'package:bytebank/main.dart';
+import 'package:bytebank/models/contact.dart';
 import 'package:bytebank/screens/contact_form.dart';
 import 'package:bytebank/screens/contacts_list.dart';
 import 'package:bytebank/screens/dashboard/dashboard.dart';
@@ -48,6 +49,8 @@ void main() {
     expect(createButton, findsOneWidget);
     await tester.tap(createButton);
     await tester.pumpAndSettle();
+
+    verify(mockContactDao.save(Contact(0,'Joao','1000')));
 
     final contactsListBack = find.byType(ContactsList);
     expect(contactsListBack, findsOneWidget);
