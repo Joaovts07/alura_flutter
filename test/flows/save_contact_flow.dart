@@ -6,8 +6,8 @@ import 'package:bytebank/screens/dashboard/dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'mocks.dart';
-import 'test_matchers.dart';
+import '../mocks/mocks.dart';
+import '../matchers/test_matchers.dart';
 
 void main() {
   testWidgets('Should save a contact', (tester) async {
@@ -55,7 +55,6 @@ void main() {
     final contactsListBack = find.byType(ContactsList);
     expect(contactsListBack, findsOneWidget);
 
-    verify(mockContactDao.findAll());
   });
 }
 

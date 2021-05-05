@@ -2,7 +2,7 @@ import 'package:bytebank/screens/dashboard/dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'test_matchers.dart';
+import '../matchers/test_matchers.dart';
 
 void main() {
   testWidgets('Should display the main image when the Dashboard is opended',
