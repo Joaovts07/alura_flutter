@@ -1,26 +1,19 @@
-import 'package:bytebank/main.dart';
 import 'package:bytebank/models/contact.dart';
 import 'package:bytebank/screens/contact_form.dart';
 import 'package:bytebank/screens/contacts_list.dart';
-import 'package:bytebank/screens/dashboard/dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
+
 import '../mocks/mocks.dart';
-import '../matchers/test_matchers.dart';
+import 'actions.dart';
 
 void main() {
   testWidgets('Should save a contact', (tester) async {
     final mockContactDao = MockContactDao();
-    await tester.pumpWidget(BytebankApp(contactDao: mockContactDao));
+    await openDashboard(tester, mockContactDao);
 
-    final dashboard = find.byType(Dashboard);
-    expect(dashboard, findsOneWidget);
-
-    final transferFeatureItem = find.byWidgetPredicate(
-        (widget) => featureItemMatcher(widget, 'Contacts', Icons.contacts));
-    expect(transferFeatureItem, findsOneWidget);
-    await tester.tap(transferFeatureItem);
+    await verifyFeatureItemAndClick(tester, 'Contacts', Icons.contacts);
     await tester.pumpAndSettle();
 
     final contactsList = find.byType(ContactsList);
@@ -50,11 +43,10 @@ void main() {
     await tester.tap(createButton);
     await tester.pumpAndSettle();
 
-    verify(mockContactDao.save(Contact(0,'Joao','1000')));
+    verify(mockContactDao.save(Contact(0, 'Joao', '1000')));
 
     final contactsListBack = find.byType(ContactsList);
     expect(contactsListBack, findsOneWidget);
-
   });
 }
 
