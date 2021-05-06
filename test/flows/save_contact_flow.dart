@@ -11,7 +11,9 @@ import 'actions.dart';
 void main() {
   testWidgets('Should save a contact', (tester) async {
     final mockContactDao = MockContactDao();
-    await openDashboard(tester, mockContactDao);
+    final mockTransactionWebClient = MockWebClient();
+
+    await openDashboard(tester, mockContactDao, mockTransactionWebClient);
 
     await verifyFeatureItemAndClick(tester, 'Contacts', Icons.contacts);
     await tester.pumpAndSettle();
