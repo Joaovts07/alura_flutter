@@ -1,10 +1,10 @@
 import 'package:bytebank/componentes/centered_message.dart';
 import 'package:bytebank/componentes/components.dart';
-import 'package:bytebank/https/webclients/transaction_webclient.dart';
 import 'package:bytebank/models/contact.dart';
 import 'package:bytebank/models/transaction.dart';
 import 'package:bytebank/screens/transaction_form.dart';
 import 'package:flutter/material.dart';
+import '../app_dependencies.dart';
 
 class TransactionsList extends StatefulWidget {
   @override
@@ -12,10 +12,10 @@ class TransactionsList extends StatefulWidget {
 }
 
 class _TransactionsListState extends State<TransactionsList> {
-  final TransactionWebClient _webClient = TransactionWebClient();
 
   @override
   Widget build(BuildContext context) {
+    final dependencies = AppDependencies.of(context);
     return Scaffold(
       appBar: AppBar(
         title: Text('Transactions'),
@@ -36,7 +36,7 @@ class _TransactionsListState extends State<TransactionsList> {
         ),
       ),
       body: FutureBuilder<List<Transaction>>(
-        future: _webClient.findAll(),
+        future: dependencies.transactionWebClient.findAll(),
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.none:

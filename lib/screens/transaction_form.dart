@@ -9,6 +9,8 @@ import 'package:bytebank/models/transaction.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
+import '../app_dependencies.dart';
+
 class TransactionForm extends StatefulWidget {
   final Contact contact;
 
@@ -20,11 +22,12 @@ class TransactionForm extends StatefulWidget {
 
 class _TransactionFormState extends State<TransactionForm> {
   final TextEditingController _valueController = TextEditingController();
-  final TransactionWebClient _webClient = TransactionWebClient();
   final String _transactionID = Uuid().v4();
   bool _sending = false;
+
   @override
   Widget build(BuildContext context) {
+    final dependencies = AppDependencies.of(context);
     return Scaffold(
       appBar: AppBar(
         title: Text('New transaction'),
@@ -83,7 +86,8 @@ class _TransactionFormState extends State<TransactionForm> {
                                 setState(() {
                                   _sending = true;
                                 });
-                                _save(transactionCreated, password, context);
+                                _save(transactionCreated, password, context,
+                                    dependencies.transactionWebClient);
                               },
                             );
                           });
@@ -102,8 +106,9 @@ class _TransactionFormState extends State<TransactionForm> {
     Transaction transactionCreated,
     String password,
     BuildContext context,
+    TransactionWebClient transactionWebClient,
   ) async {
-    final Transaction transaction = await _webClient
+    final Transaction transaction = await transactionWebClient
         .saveTransaction(transactionCreated, password)
         .catchError((error) {
       showDialog(
