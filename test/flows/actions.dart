@@ -1,12 +1,18 @@
+import 'package:bytebank/https/webclients/transaction_webclient.dart';
 import 'package:bytebank/main.dart';
 import 'package:bytebank/screens/dashboard/dashboard.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
+
 import '../matchers/test_matchers.dart';
 import '../mocks/mocks.dart';
 
-Future openDashboard(WidgetTester tester, MockContactDao mockContactDao) async {
-  await tester.pumpWidget(BytebankApp(contactDao: mockContactDao));
+Future openDashboard(WidgetTester tester, MockContactDao mockContactDao,
+    TransactionWebClient transactionWebClient) async {
+  await tester.pumpWidget(BytebankApp(
+    contactDao: mockContactDao,
+    transactionWebClient: transactionWebClient,
+  ));
   final dashboard = find.byType(Dashboard);
   expect(dashboard, findsOneWidget);
 }
@@ -14,7 +20,7 @@ Future openDashboard(WidgetTester tester, MockContactDao mockContactDao) async {
 Future verifyFeatureItemAndClick(
     WidgetTester tester, String description, IconData icon) async {
   final featureItem = find.byWidgetPredicate(
-          (widget) => featureItemMatcher(widget, description,icon));
+      (widget) => featureItemMatcher(widget, description, icon));
   expect(featureItem, findsOneWidget);
   await tester.tap(featureItem);
 }
