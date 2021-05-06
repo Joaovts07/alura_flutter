@@ -26,9 +26,10 @@ class BytebankApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppDependencies(
+      contactDao: contactDao,
       child: MaterialApp(
         theme: bytebankTheme,
-        home: Dashboard(contactDao: contactDao,),
+        home: Dashboard(),
       ),
     );
   }

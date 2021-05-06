@@ -9,9 +9,11 @@ class AppDependencies extends InheritedWidget {
     @required Widget child,
   }) : super(child: child);
 
+  static AppDependencies of(BuildContext context) =>
+      context.dependOnInheritedWidgetOfExactType<AppDependencies>();
+
   @override
-  bool updateShouldNotify(InheritedWidget oldWidget) {
-    // TODO: implement updateShouldNotify
-    throw UnimplementedError();
+  bool updateShouldNotify(AppDependencies oldWidget) {
+    return contactDao != oldWidget.contactDao;
   }
 }
