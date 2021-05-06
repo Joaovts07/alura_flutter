@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
 import '../mocks/mocks.dart';
 import 'actions.dart';
 
@@ -10,5 +9,6 @@ void main(){
     await openDashboard(tester, mockContactDao);
     await verifyFeatureItemAndClick(tester, 'Transaction Feed', Icons.description);
     await tester.pumpAndSettle();
+
   });
 }
