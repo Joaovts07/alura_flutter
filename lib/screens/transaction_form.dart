@@ -6,6 +6,7 @@ import 'package:bytebank/componentes/transaction_auth_dialog.dart';
 import 'package:bytebank/https/webclients/transaction_webclient.dart';
 import 'package:bytebank/models/contact.dart';
 import 'package:bytebank/models/transaction.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
@@ -117,6 +118,11 @@ class _TransactionFormState extends State<TransactionForm> {
             return FailureDialog(error.message);
           });
     }, test: (error) => error is HttpException).catchError((error) {
+      if (FirebaseCrashlytics.instance.isCrashlyticsCollectionEnabled) {
+        FirebaseCrashlytics.instance.setCustomKey ('exception', error.toString());
+        FirebaseCrashlytics.instance.setCustomKey ('http_body', transactionCreated.toString());
+        FirebaseCrashlytics.instance.recordError(error, null);
+      }
       _showFailureMessage(context, messageError: 'Timeout error');
     }, test: (error) => error is TimeoutException).catchError((error) {
       _showFailureMessage(context);
