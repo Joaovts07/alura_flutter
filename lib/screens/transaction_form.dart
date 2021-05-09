@@ -125,6 +125,11 @@ class _TransactionFormState extends State<TransactionForm> {
       }
       _showFailureMessage(context, messageError: 'Timeout error');
     }, test: (error) => error is TimeoutException).catchError((error) {
+      if (FirebaseCrashlytics.instance.isCrashlyticsCollectionEnabled) {
+        FirebaseCrashlytics.instance.setCustomKey ('exception', error.toString());
+        FirebaseCrashlytics.instance.setCustomKey ('http_body', transactionCreated.toString());
+        FirebaseCrashlytics.instance.recordError(error, null);
+      }
       _showFailureMessage(context);
     }).whenComplete(() {
       setState(() {
